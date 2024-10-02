@@ -1,13 +1,179 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+/* VARIABLES TEMPLATES COLORS */
+
+:root {
+  --color-1: rgba(241, 185, 134, 1);
+  --color-2: rgba(241, 186, 134, 0.3);
+  --color-3: rgb(159, 103, 51);
+
+  --white: rgb(255, 255, 255, 1);
+  --black: rgb(0, 0, 0, 1);
+  --black-2: rgba(0, 0, 0, 0.5);
+
+  --color-button-1: rgba(241, 185, 134, 1);
+  --color-button-1-hover: rgb(255, 255, 255);
+  --background-button-1: rgba(144, 103, 58, 0.35);
+  --background-button-1-hover: rgba(144, 103, 58, 0.35);
+  --border-button-1: rgba(241, 185, 134, 1);
+  --border-button-1-hover: rgb(255, 255, 255);
+  --border-button-1-active: rgb(255, 102, 0);
+
+  --color-button-2: rgba(28, 14, 0, 1);
+  --color-button-2-hover: rgb(255, 255, 255);
+  --background-button-2: rgba(241, 186, 134, 0.8);
+  --background-button-2-hover: rgba(241, 186, 134, 0.7);
+  --border-button-2: rgba(156, 80, 0, 1);
+  --border-button-2-hover: rgb(255, 255, 255);
+  --border-button-2-active: rgb(255, 102, 0);
+
+  --transition-in: all 300ms ease-in;
+  --transition-out: all 400ms ease-out;
+  --transition-out-long: all 1000ms ease-out;
+
+  --container-width-lg: 75%;
+  --container-width-md: 86%;
+  --container-width-sm: 92%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+
+body {
+  /* background-color: #1f1f38; */
+  background-color: #360202;
+  font-family: "Poppins", Verdana, sans-serif;
+  background-image: url("./assets/textures/gplay.png");
+}
+
+.titre {
+  /* color: #ffde59; */
+  color: #ffde59;
+  /* -webkit-text-stroke: 2px #324983; */
+
+  /* text-shadow: 0 0 5px #375fab, 0 0 10px #375fab, 0 0 20px #375fab,
+    0 0 40px #375fab, 0 0 80px #375fab, 0 0 100px #375fab, 0 0 150px #375fab;  */
+
+  /* text-shadow: 1px 1px 0 #375fab, -1px 1px 0 #375fab, 1px -1px 0 #375fab,
+    -1px -1px 0 #375fab; */
+
+  text-shadow: 2px 2px 0 #324983, -2px 2px 0 #324983, 2px -2px 0 #324983,
+    -2px -2px 0 #324983;
+
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-weight: 500;
+  color: var(--color-1);
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2.3rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 2.5rem;
+}
+
+p {
+  font-size: 1.4rem;
+}
+
+/* ===== MEDIA QUERIES (MOBILE) ===== */
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .container {
+    width: var(--container-width-sm);
+    min-height: 66vh;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  a {
+    font-size: 1.2rem;
+  }
+}
+
+/* ===== MEDIA QUERIES (TABLET) ===== */
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .container {
+    width: var(--container-width-md);
+    min-height: 66vh;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  a {
+    font-size: 1.4rem;
+  }
+}
+
+/* ===== MEDIA QUERIES (LAPTOP) ===== */
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  .container {
+    width: var(--container-width-lg);
+    min-height: 66vh;
+  }
+
+  h1 {
+    font-size: 2.3rem;
+  }
+
+  h4 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  a {
+    font-size: 1.6rem;
+  }
 }
