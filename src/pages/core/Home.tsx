@@ -4,7 +4,26 @@ import ListSearch from "../user/components/ListSearch";
 import "./../../styles/home.css";
 import CustomTextField from "./components/CustomTextField";
 
+import { useEffect, useState } from "react";
+import { pokemonService } from "../../_services/pokemonService";
+import { PokemonArray } from "../../interfaces/interfaceSearchPokemon";
+
+// import useSearch from "../../hooks/useSearch";
+
 const Home = () => {
+  // ===== TEST CALL API =====
+  const [pokemons, setPokemons] = useState<PokemonArray | null>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await pokemonService.getAllPokemons();
+      setPokemons(data);
+    };
+
+    fetchData();
+  }, []);
+  // ===== TEST CALL API =====
+
   return (
     <>
       <section
@@ -28,17 +47,19 @@ const Home = () => {
             //   position: "relative",
           }}
         >
-          <CustomTextField
-            label="Rechercher"
-            placeholder="Nom du pokémon"
-            // value={search}
-            // onChange={(e) => setSearch(e.target.value)}
-            // onClear={handleClear}
-          />
+          <CustomTextField label="Rechercher" placeholder="Nom du pokémon" />
 
           <button className="btn primary">Rechercher</button>
 
           <ListSearch />
+
+          {pokemons !== null && pokemons !== undefined && (
+            <ul>
+              {pokemons.map((pokemon) => (
+                <p key={pokemon.pokedex_id}>{pokemon.pokedex_id}</p>
+              ))}
+            </ul>
+          )}
         </Card>
       </section>
     </>

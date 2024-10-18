@@ -2,35 +2,41 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import { IoMdClose } from "react-icons/io";
+import useSearch from "../../../hooks/useSearch";
 
 type CustomTextFieldProps = {
   label: string;
   placeholder?: string;
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onClear?: () => void;
 };
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
   label,
   placeholder,
-  value,
-  onChange,
-  onClear,
 }) => {
+  const { query, setQuery, setResultsSearchPokemon } = useSearch();
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    console.log(query);
+  };
+
+  const handleClearSearch = () => {
+    setQuery("");
+    setResultsSearchPokemon(null);
+  };
+
   return (
     <TextField
       label={label}
       placeholder={placeholder}
+      value={query}
+      onChange={handleSearch}
       variant="filled"
       slotProps={{
         input: {
           endAdornment: (
             <InputAdornment position="end">
-              <IoMdClose
-                className="icons"
-                // onClick={clearSearch}
-              />
+              <IoMdClose className="icons" onClick={handleClearSearch} />
             </InputAdornment>
           ),
         },
