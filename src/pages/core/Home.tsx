@@ -2,27 +2,25 @@ import { Card } from "@mui/material";
 import Header from "./Header";
 import ListSearch from "../user/components/ListSearch";
 import "./../../styles/home.css";
-import CustomTextField from "./components/CustomTextField";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { pokemonService } from "../../_services/pokemonService";
-import { PokemonArray } from "../../interfaces/interfaceSearchPokemon";
+import CustomAutocomplete from "./components/CustomAutocomplete";
 
-// import useSearch from "../../hooks/useSearch";
+import useSearch from "../../hooks/useSearch";
 
 const Home = () => {
-  // ===== TEST CALL API =====
-  const [pokemons, setPokemons] = useState<PokemonArray | null>();
+  const { setResultsSearchPokemon } = useSearch();
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await pokemonService.getAllPokemons();
-      setPokemons(data);
+      setResultsSearchPokemon(data);
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // ===== TEST CALL API =====
 
   return (
     <>
@@ -47,19 +45,11 @@ const Home = () => {
             //   position: "relative",
           }}
         >
-          <CustomTextField label="Rechercher" placeholder="Nom du pokémon" />
+          <CustomAutocomplete />
 
           <button className="btn primary">Rechercher</button>
 
           <ListSearch />
-
-          {pokemons !== null && pokemons !== undefined && (
-            <ul>
-              {pokemons.map((pokemon) => (
-                <p key={pokemon.pokedex_id}>{pokemon.pokedex_id}</p>
-              ))}
-            </ul>
-          )}
         </Card>
       </section>
     </>
