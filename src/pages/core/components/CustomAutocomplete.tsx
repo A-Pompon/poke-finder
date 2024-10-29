@@ -1,39 +1,91 @@
-import { Autocomplete, Box, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Popper,
+  styled,
+  TextField,
+  Typography,
+} from "@mui/material";
 import useSearch from "../../../hooks/useSearch";
+import ItemSearch from "./ItemSearch";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+const CustomPopper = styled(Popper)({
+  ".MuiAutocomplete-paper": {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    color: "white",
+    borderRadius: "8px",
+    backdropFilter: "blur(4px)",
+    "& li:hover": {
+      backgroundColor: "rgba(75, 0, 0, 0.3)",
+      cursor: "pointer",
+    },
+  },
+  "& .MuiAutocomplete-listbox": {
+    maxHeight: "70vh",
+  },
+});
 
 const CustomAutocomplete = () => {
-  const { /*query, setQuery, setResultsSearchPokemon,*/ resultSearchPokemon } =
-    useSearch();
+  const { resultSearchPokemon } = useSearch();
+  const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState<any>(null);
+
+  const handleOptionChange = (value: any) => {
+    setSelectedOption(value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" && selectedOption) {
+      event.preventDefault();
+      navigate(`/pokemon/${selectedOption.pokedex_id}`);
+    }
+  };
+
+  const filteredOptions = resultSearchPokemon?.slice(1) || [];
 
   return (
     <>
       {resultSearchPokemon && resultSearchPokemon.length > 0 && (
         <Autocomplete
-          options={resultSearchPokemon}
+          options={filteredOptions}
           getOptionLabel={(option) => option.name.fr}
+          PopperComponent={CustomPopper}
           renderOption={(props, option) => {
             const { key, ...optionProps } = props;
             return (
-              <Box
-                key={key}
-                component="li"
-                sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                {...optionProps}
-              >
-                <img
-                  loading="lazy"
-                  width="50"
-                  src={`https://raw.githubusercontent.com/Yarkis01/TyraDex/images/sprites/${option.pokedex_id}/regular.png`}
-                  alt={`Illustration de ${option.name.fr}`}
-                />
-                {option.name.fr} ({option.name.en}) +{option.name.jp}
-              </Box>
+              <ItemSearch
+                key={option.pokedex_id}
+                option={option}
+                optionProps={optionProps}
+              />
             );
           }}
+          noOptionsText={
+            <Typography
+              sx={{
+                color: "white",
+                textAlign: "center",
+                padding: "8px",
+              }}
+            >
+              Nom inconnu.
+            </Typography>
+          }
           renderInput={(params) => (
-            <TextField sx={{ color: "white" }} {...params} label="Rechercher" />
+            <TextField
+              sx={{ color: "white" }}
+              variant="filled"
+              {...params}
+              label="Rechercher"
+              placeholder="Nom de pokémon"
+            />
           )}
+          onKeyDown={handleKeyDown}
+          onChange={handleOptionChange}
           fullWidth
+          disablePortal={true}
+          disableCloseOnSelect // Empeche de fermer lorsqu'on select un item
           sx={{
             mt: "1.5em",
             mb: "1em",
@@ -54,21 +106,13 @@ const CustomAutocomplete = () => {
               color: "rgb(255, 255, 255)",
               borderRadius: "50px",
               border: "none",
-            },
-            "& .MuiInputBase-root:hover": {
-              boxShadow: "0px 0px 10px 5px rgba(255, 255, 255, 0.3)",
-            },
-            "& .MuiFormLabel-root": {
-              color: "rgb(255, 255, 255)",
-            },
-            "& label.Mui-focused": {
-              color: "rgb(255, 255, 255)",
-              pt: "16px",
-            },
-            "& .MuiOutlinedInput-root": {
-              "&.Mui-focused fieldset": {
-                borderColor: "transparent",
+              "&.MuiInputBase-root:hover": {
+                boxShadow: "0px 0px 10px 5px rgba(255, 255, 255, 0.3)",
               },
+            },
+            "& label": {
+              color: "rgb(255, 255, 255)",
+              "&.Mui-focused": { color: "rgb(255, 255, 255)" },
             },
           }}
         />
