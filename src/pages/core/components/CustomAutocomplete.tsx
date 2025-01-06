@@ -8,7 +8,8 @@ import {
 import useSearch from "../../../hooks/useSearch";
 import ItemSearch from "./ItemSearch";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Pokemon } from "../../../interfaces/interfaceSearchPokemon";
 
 const CustomPopper = styled(Popper)({
   ".MuiAutocomplete-paper": {
@@ -31,7 +32,11 @@ const CustomAutocomplete = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState<any>(null);
 
-  const handleOptionChange = (value: any) => {
+  const handleOptionChange = (
+    event: React.SyntheticEvent,
+    value: Pokemon | null
+  ) => {
+    event.preventDefault();
     setSelectedOption(value);
   };
 
@@ -42,7 +47,13 @@ const CustomAutocomplete = () => {
     }
   };
 
-  const filteredOptions = resultSearchPokemon?.slice(1) || [];
+  // Pb de render
+  // const filteredOptions = resultSearchPokemon?.slice(1) || [];
+  // TEST
+  const filteredOptions = useMemo(
+    () => resultSearchPokemon?.slice(1) || [],
+    [resultSearchPokemon]
+  );
 
   return (
     <>
@@ -84,8 +95,7 @@ const CustomAutocomplete = () => {
           onKeyDown={handleKeyDown}
           onChange={handleOptionChange}
           fullWidth
-          disablePortal={true}
-          disableCloseOnSelect // Empeche de fermer lorsqu'on select un item
+          // disableCloseOnSelect // Empeche de fermer lorsqu'on select un item
           sx={{
             mt: "1.5em",
             mb: "1em",

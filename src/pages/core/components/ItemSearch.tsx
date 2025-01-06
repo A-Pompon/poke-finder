@@ -10,6 +10,9 @@ interface ItemSearchProps {
 const ItemSearch: React.FC<ItemSearchProps> = ({ option, optionProps }) => {
   const navigate = useNavigate();
 
+  // Pb de render
+  console.log("ItemSearch rendered");
+
   const handleClick = () => {
     console.log(`pokedex_id: ${option.pokedex_id} name : ${option.name.fr}`);
     navigate(`/pokemon/${option.pokedex_id}`);

@@ -24,6 +24,12 @@ const ItemDetails = () => {
   return (
     <div>
       <h2>POKEMON N° : {itemId}</h2>
+      <img
+        loading="lazy"
+        width="50"
+        src={`https://raw.githubusercontent.com/Yarkis01/TyraDex/images/sprites/${itemId}/regular.png`}
+        alt={`Illustration de ${pokemonData?.name.fr}`}
+      />
       <p>{pokemonData?.name.fr}</p>
       <button onClick={handleBack} className="btn primary">
         Retour
