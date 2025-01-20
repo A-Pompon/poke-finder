@@ -22,31 +22,40 @@ const ItemSearch: React.FC<ItemSearchProps> = ({ option, optionProps }) => {
       component="li"
       sx={{
         height: "7em",
-        display: "flex",
-        alignItems: "center",
-        "& > img": {
-          marginRight: "0.5em",
-          flexShrink: 0,
-        },
+        gap: "1em",
       }}
       {...optionProps}
       onClick={handleClick}
     >
-      <img
-        loading="lazy"
-        width="50"
-        src={`https://raw.githubusercontent.com/Yarkis01/TyraDex/images/sprites/${option.pokedex_id}/regular.png`}
-        alt={`Illustration de ${option.name.fr}`}
-      />
-      {option.name.fr} ({option.name.en}) +{option.name.jp}
-      {option.types?.map((type) => (
-        <Avatar
-          key={type.name}
-          src={`${type.image}`}
-          alt={`${type.name}`}
-          sx={{ width: "1em", height: "1em" }}
+      <section>
+        <img
+          loading="lazy"
+          width="50"
+          src={`https://raw.githubusercontent.com/Yarkis01/TyraDex/images/sprites/${option.pokedex_id}/regular.png`}
+          alt={`Illustration de ${option.name.fr}`}
         />
-      ))}
+      </section>
+      <section>
+        <p>
+          {option.name.fr} ({option.name.en}) + {option.name.jp}
+        </p>
+      </section>
+      <section
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: ".5em",
+        }}
+      >
+        {option.types?.map((type) => (
+          <Avatar
+            key={type.name}
+            src={`${type.image}`}
+            alt={`${type.name}`}
+            sx={{ width: "1em", height: "1em" }}
+          />
+        ))}
+      </section>
     </Box>
   );
 };

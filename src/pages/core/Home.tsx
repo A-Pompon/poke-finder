@@ -1,6 +1,5 @@
 import { Card } from "@mui/material";
 import Header from "./Header";
-import ListSearch from "../user/components/ListSearch";
 import "./../../styles/home.css";
 
 import { useEffect } from "react";
@@ -26,10 +25,9 @@ const Home = () => {
     <>
       <section
         style={{
-          //   width: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-start",
+          alignItems: "center",
         }}
       >
         <Header />
@@ -38,18 +36,17 @@ const Home = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            // width: "40%",
-            width: "320px",
+            gap: "1em",
+            width: "40%",
+            minWidth: "300px",
             minHeight: "100vh",
-            backgroundColor: "rgba(0,0,0,0.3)",
-            //   position: "relative",
+            backgroundColor: "transparent",
+            borderRadius: "8px",
           }}
         >
           <CustomAutocomplete />
 
           <button className="btn primary">Rechercher</button>
-
-          <ListSearch />
         </Card>
       </section>
     </>
