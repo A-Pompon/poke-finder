@@ -48,6 +48,11 @@
   gap: 0.2em;
 }
 
+.listTalentsContainer > li > span {
+  font-size: 1.2rem;
+  text-align: justify;
+}
+
 .buttonItemDetails {
   width: 100%;
   display: flex;

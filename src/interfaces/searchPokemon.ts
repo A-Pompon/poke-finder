@@ -6,4 +6,6 @@ export interface SearchPokemonContextType {
   setResultsSearchPokemon: Dispatch<SetStateAction<PokemonArray | null>>;
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }

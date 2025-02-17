@@ -20,6 +20,7 @@ const ItemSearch: React.FC<ItemSearchProps> = ({ option, optionProps }) => {
   return (
     <Box
       component="li"
+      key={option.pokedex_id}
       sx={{
         height: "7em",
         gap: "1em",

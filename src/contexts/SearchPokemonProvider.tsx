@@ -14,6 +14,7 @@ const SearchPokemonProvider = ({ children }: SearchPokemonProviderProps) => {
   const [resultSearchPokemon, setResultsSearchPokemon] =
     useState<PokemonArray | null>(null);
   const [query, setQuery] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   return (
     <SearchPokemonContext.Provider
       value={{
@@ -21,6 +22,8 @@ const SearchPokemonProvider = ({ children }: SearchPokemonProviderProps) => {
         setQuery,
         resultSearchPokemon,
         setResultsSearchPokemon,
+        loading,
+        setLoading,
       }}
     >
       {children}

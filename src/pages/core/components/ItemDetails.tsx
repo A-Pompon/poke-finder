@@ -11,12 +11,26 @@ const ItemDetails = () => {
   const { itemId } = useParams<{ itemId: string }>();
   const navigate = useNavigate();
   const [pokemonData, setPokemonData] = useState<Pokemon | null>(null);
+  const [idPokeLimitMax, setIdPokeLimitMax] = useState<boolean>(true);
+  const [idPokeLimitMin, setIdPokeLimitMin] = useState<boolean>(true);
 
-  // Pb avec l'actualisation des données à l'intérieur, seul le numéro changent (car c'est itemId)
+  useEffect(() => {
+    if (itemId && +itemId < 2) {
+      setIdPokeLimitMin(true);
+    } else {
+      setIdPokeLimitMin(false);
+    }
+    if (itemId && +itemId > 1024) {
+      setIdPokeLimitMax(true);
+    } else {
+      setIdPokeLimitMax(false);
+    }
+  }, [itemId]);
+
   // A TESTER :
-  // Mettre un useState qui s'actualise avec un ou le useEffect déjà présent et qui s'actualise lorsque itemId s'actualise
   // Revoir le CSS de la section Talents ??
   // Tjrs pb de re-render à gérer
+  // Tester https://mui.com/material-ui/react-autocomplete/#virtualization pour gérer big list
   const nextPoke = () => {
     const nextId = Number(itemId) + 1;
     navigate(`/pokemon/${nextId}`);
@@ -34,10 +48,10 @@ const ItemDetails = () => {
   useEffect(() => {
     if (resultSearchPokemon !== null && itemId) {
       setPokemonData(resultSearchPokemon[+itemId]);
-      console.log(pokemonData);
+      console.log("Passe", pokemonData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [itemId]);
 
   return (
     <main className="mainItemDetails">
@@ -69,7 +83,7 @@ const ItemDetails = () => {
               <p>Types : </p>
               <section className="listTypes">
                 {pokemonData?.types?.map((type) => (
-                  <section className="listTypesImg">
+                  <li className="listTypesImg" key={type.name}>
                     <span className={type.name.toLowerCase()}>{type.name}</span>
                     <Avatar
                       key={type.name}
@@ -77,17 +91,25 @@ const ItemDetails = () => {
                       alt={`${type.name}`}
                       sx={{ width: "1em", height: "1em" }}
                     />
-                  </section>
+                  </li>
                 ))}
               </section>
             </section>
             <p>Hauteur : {pokemonData.height}</p>
             <p>Poids : {pokemonData.weight}</p>
           </section>
-          <section>
+          <section className="listTalentsContainer">
             <h3>Talents :</h3>
             {pokemonData.talents?.map((talent) => (
-              <p>{talent.name}</p>
+              <li className="listTypesImg" key={talent.name}>
+                <span
+                  className={
+                    pokemonData.types?.[0]?.name.toLowerCase() ?? "inconnu"
+                  }
+                >
+                  {talent.name}
+                </span>
+              </li>
             ))}
           </section>
           <section>
@@ -121,10 +143,18 @@ const ItemDetails = () => {
                 gap: "1em",
               }}
             >
-              <button onClick={previousPoke} className="btn primary">
+              <button
+                onClick={previousPoke}
+                disabled={idPokeLimitMin}
+                className="btn primary"
+              >
                 Précédent
               </button>
-              <button onClick={nextPoke} className="btn primary">
+              <button
+                onClick={nextPoke}
+                disabled={idPokeLimitMax}
+                className="btn primary"
+              >
                 Suivant
               </button>
             </section>

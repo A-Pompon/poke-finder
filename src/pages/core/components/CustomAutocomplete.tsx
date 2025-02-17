@@ -30,7 +30,7 @@ const CustomPopper = styled(Popper)({
 const CustomAutocomplete = () => {
   const { resultSearchPokemon } = useSearch();
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState<any>(null);
+  const [selectedOption, setSelectedOption] = useState<Pokemon | null>(null);
 
   const handleOptionChange = (
     event: React.SyntheticEvent,
